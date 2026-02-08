@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>flower day</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  height:100vh;
+  background:radial-gradient(circle at top,#ffc0cb,#140014);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  font-family:sans-serif;
+}
+.glow{
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle,rgba(255,192,203,.3),transparent 70%);
+  animation:pulse 6s infinite alternate;
+}
+@keyframes pulse{from{opacity:.6}to{opacity:1}}
+img{
+  position:absolute;
+  max-width:82vw;
+  max-height:82vh;
+  opacity:0;
+  transform:scale(.88) translateY(20px);
+  transition:all 1.5s ease;
+  border-radius:18px;
+  box-shadow:0 0 50px rgba(255,182,193,.35);
+}
+img.show{opacity:1;transform:scale(1) translateY(0)}
+.petal{
+  position:absolute;
+  top:-10%;
+  font-size:20px;
+  animation:fall linear infinite;
+  opacity:.8;
+}
+@keyframes fall{to{transform:translateY(120vh) rotate(360deg)}}
+.countdown{
+  position:absolute;
+  font-size:48px;
+  font-weight:800;
+  color:#ffd6e8;
+  opacity:0;
+  transition:opacity .6s ease;
+}
+.proposal{
+  position:absolute;
+  bottom:15%;
+  max-width:85vw;
+  text-align:center;
+  font-size:18px;
+  font-weight:900;
+  color:black;
+  background:#ffd6e8;
+  padding:14px 18px;
+  border-radius:22px;
+  opacity:0;
+  transform:scale(.9);
+  transition:all 1.2s ease;
+}
+.proposal.show{opacity:1;transform:scale(1)}
+</style>
+</head>
+
+<body>
+<div class="glow"></div>
+
+<img src="images/pic1.jpg">
+<img src="images/pic2.jpg">
+<img src="images/pic3.jpg">
+<img src="images/pic4.jpg">
+
+<div class="countdown" id="countdown"></div>
+
+<div class="proposal">
+WHAT DO U THINK ABT PROPOSAL DAY<br>
+(MY FIRST WEBSITE FOR YOU THX TO ME YOUR ISHAN)
+</div>
+
+<script>
+const images=document.querySelectorAll("img")
+const countdown=document.getElementById("countdown")
+const proposal=document.querySelector(".proposal")
+let index=0
+
+function showNext(){
+  if(index>0){images[index-1].classList.remove("show")}
+  if(index<images.length){
+    images[index].classList.add("show")
+    index++
+  }else{startCountdown()}
+}
+
+showNext()
+setInterval(showNext,3500)
+
+function startCountdown(){
+  const nums=["3","2","1"]
+  let i=0
+  const interval=setInterval(()=>{
+    countdown.innerText=nums[i]
+    countdown.style.opacity=1
+    setTimeout(()=>countdown.style.opacity=0,600)
+    i++
+    if(i===nums.length){
+      clearInterval(interval)
+      setTimeout(()=>proposal.classList.add("show"),800)
+    }
+  },1200)
+}
+
+const symbols=["🌸","💗","🌷"]
+setInterval(()=>{
+  const p=document.createElement("div")
+  p.className="petal"
+  p.innerText=symbols[Math.floor(Math.random()*symbols.length)]
+  p.style.left=Math.random()*100+"vw"
+  p.style.animationDuration=6+Math.random()*4+"s"
+  document.body.appendChild(p)
+  setTimeout(()=>p.remove(),10000)
+},500)
+</script>
+</body>
+</html>
